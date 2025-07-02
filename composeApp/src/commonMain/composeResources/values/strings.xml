@@ -5,6 +5,7 @@
     <string name="bottom_nav_transactions">Transactions</string>
     <string name="bottom_nav_categories">Categories</string>
     <string name="bottom_nav_reports">Reports</string>
+    <string name="view_all_transactions_button">View All</string>
 
     <string name="login_title">Log In!</string>
     <string name="login_email_label">Email</string>

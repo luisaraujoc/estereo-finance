@@ -7,6 +7,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.coutinho.estereofinance.ui.screens.auth.LoginScreen
 import com.coutinho.estereofinance.ui.screens.auth.RegisterScreen
+import com.coutinho.estereofinance.ui.screens.home.HomeScreen
+import com.coutinho.estereofinance.ui.screens.transactions.TransactionsScreen
 
 @Composable
 fun AppNavigation(modifier: Modifier = Modifier) {
@@ -27,12 +29,20 @@ fun AppNavigation(modifier: Modifier = Modifier) {
 
         composable(Screen.Register.route) {
             RegisterScreen(
-                onRegisterSuccess = { navController.navigate(Screen.Home.route) },
+                onRegisterSuccess = { navController.navigate(Screen.Login.route) },
                 onNavigateToLogin = { navController.navigate(Screen.Login.route) }
             )
         }
 
-        // Adicione outras telas principais aqui conforme necessário
+        composable(Screen.Home.route) {
+            HomeScreen(
+                onNavigateToTransactions = { navController.navigate("transactions") } // Placeholder for transactions screen
+            )
+        }
+
+        composable(Screen.Transactions.route) {
+            TransactionsScreen()
+        }
     }
 }
 
@@ -40,8 +50,5 @@ sealed class Screen(val route: String) {
     object Login : Screen("login")
     object Register : Screen("register")
     object Home : Screen("home")
-    // Adicione outras telas aqui
-    // object Transactions : Screen("transactions")
-    // object Categories : Screen("categories")
-    // object Reports : Screen("reports")
+    object Transactions : Screen("transactions")
 }

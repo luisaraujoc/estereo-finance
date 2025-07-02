@@ -43,7 +43,8 @@ kotlin {
             implementation(libs.androidx.navigation.compose)
             implementation(libs.room.runtime)
             implementation(libs.materialKolor)
-
+            implementation("br.com.devsrsouza.compose.icons:eva-icons:1.1.1")
+            implementation("com.ionspin.kotlin:bignum:0.3.10")
         }
 
         commonTest.dependencies {

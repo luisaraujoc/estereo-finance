@@ -1,14 +1,17 @@
 package com.coutinho.estereofinance.ui.screens.auth
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.coutinho.estereofinance.utils.Strings
 import com.coutinho.estereofinance.utils.StringRes
 
@@ -87,6 +90,7 @@ fun RegisterScreen(
                 onRegisterSuccess()
             },
             modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(4.dp),
             enabled = !isLoading.value
         ) {
             if (isLoading.value) {
@@ -100,8 +104,13 @@ fun RegisterScreen(
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(Strings.get(StringRes.REGISTER_LOGIN_PROMPT))
-            TextButton(onClick = onNavigateToLogin) {
-                Text(Strings.get(StringRes.REGISTER_LOGIN_PROMPT_BUTTON))
+            TextButton(onClick = onNavigateToLogin, shape = RoundedCornerShape(4.dp),) {
+                Text(
+                    Strings.get(StringRes.REGISTER_LOGIN_PROMPT_BUTTON),
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp
+                    ))
             }
         }
     }

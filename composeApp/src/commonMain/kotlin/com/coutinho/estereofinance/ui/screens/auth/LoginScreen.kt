@@ -1,6 +1,7 @@
 package com.coutinho.estereofinance.ui.screens.auth
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -61,11 +62,11 @@ fun LoginScreen(
 
         Button(
             onClick = {
-                // TODO: Implementar lógica de login
                 isLoading.value = true
                 onLoginSuccess()
             },
             modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(4.dp),
             enabled = !isLoading.value
         ) {
             if (isLoading.value) {
@@ -79,7 +80,7 @@ fun LoginScreen(
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(Strings.get(StringRes.LOGIN_REGISTER_PROMPT))
-            TextButton(onClick = onNavigateToRegister) {
+            TextButton(onClick = onNavigateToRegister, shape = RoundedCornerShape(4.dp),) {
                 Text(
                     Strings.get(StringRes.LOGIN_REGISTER_PROMPT_BUTTON),
                     style = MaterialTheme.typography.bodyMedium.copy(

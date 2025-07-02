@@ -14,6 +14,7 @@ object Strings {
             StringRes.BOTTOM_NAV_TRANSACTIONS -> stringResource(Res.string.bottom_nav_transactions)
             StringRes.BOTTOM_NAV_CATEGORIES -> stringResource(Res.string.bottom_nav_categories)
             StringRes.BOTTOM_NAV_REPORTS -> stringResource(Res.string.bottom_nav_reports)
+            StringRes.VIEW_ALL_TRANSACTIONS_BUTTON -> stringResource(Res.string.view_all_transactions_button)
 
             // Login Screen
             StringRes.LOGIN_TITLE -> stringResource(Res.string.login_title)
@@ -100,6 +101,7 @@ enum class StringRes {
     EXPENSE_LABEL,
     HISTORY_LABEL,
     CURRENCY_FORMAT,
+    VIEW_ALL_TRANSACTIONS_BUTTON,
 
     // Other Screens
     TRANSACTIONS_TITLE,
