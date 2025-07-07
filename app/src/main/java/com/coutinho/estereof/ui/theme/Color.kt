@@ -1,0 +1,76 @@
+package com.coutinho.estereof.ui.theme
+
+import androidx.compose.ui.graphics.Color
+
+
+val PrimaryLight = Color(0xFFFF8C42)
+val OnPrimaryLight = Color(0xFFFFFFFF)
+val PrimaryContainerLight = Color(0xFFFFDBC9)
+val OnPrimaryContainerLight = Color(0xFF331200)
+val SecondaryLight = Color(0xFFFFBF5C)
+val OnSecondaryLight = Color(0xFFFFFFFF)
+val SecondaryContainerLight = Color(0xFFE6DA69)
+val OnSecondaryContainerLight = Color(0xFF171614) // This color value is 0xFF171614
+val TertiaryLight = Color(0xFFFFF275)
+val OnTertiaryLight = Color(0xFFFFFFFF)
+val TertiaryContainerLight = Color(0xFF9D931D)
+val OnTertiaryContainerLight = Color(0xFF171614) // This color value is 0xFF171614
+val ErrorLight = Color(0xFFFF3C38)
+val OnErrorLight = Color(0xFFFFFFFF)
+val ErrorContainerLight = Color(0xFFFFBDBB)
+val OnErrorContainerLight = Color(0xFF171614) // This color value is 0xFF171614
+val BackgroundLight = Color(0xFFFCFAF7) // This value is not directly in the colorScheme, derived from onSurface
+val OnBackgroundLight = Color(0xFF171614) // This value is not directly in the colorScheme, derived from surface
+val SurfaceLight = Color(0xFFF7F7FF)
+val OnSurfaceLight = Color(0xFFFF8C42)
+val SurfaceVariantLight = Color(0xFFFF785A) // This value is 0xFFFF785A
+val OnSurfaceVariantLight = Color(0xFFFF785A) // This value is 0xFFFF785A
+val OutlineLight = Color(0xFFFFE0B0)
+val OutlineVariantLight = Color(0xFFD7C2B8)
+val ScrimLight = Color(0xFF000000)
+val InverseSurfaceLight = Color(0xFF0F1116)
+val InverseOnSurfaceLight = Color(0xFFFF8C42)
+val InversePrimaryLight = Color(0xFFFFBF5C)
+val SurfaceDimLight = Color(0xFFE8D7CF)
+val SurfaceBrightLight = Color(0xFFFFF8F6)
+val SurfaceContainerLowestLight = Color(0xFFFFFFFF)
+val SurfaceContainerLowLight = Color(0xFFFFF1EB)
+val SurfaceContainerLight = Color(0xFFFCEAE2)
+val SurfaceContainerHighLight = Color(0xFFF6E5DD)
+val SurfaceContainerHighestLight = Color(0xFFFFAA5A)
+
+val PrimaryDark = Color(0xFFFF8C42)
+val OnPrimaryDark = Color(0xFFFFFFFF)
+val PrimaryContainerDark = Color(0xFFFFE9D3)
+val OnPrimaryContainerDark = Color(0xFFFDDBC9) // Corrected from json to match standard
+val SecondaryDark = Color(0xFFFF785A)
+val OnSecondaryDark = Color(0xFFFFFFFF)
+val SecondaryContainerDark = Color(0xFFFFDAD2)
+val OnSecondaryContainerDark = Color(0xFFFF785A) // This value is 0xFFFF785A
+val TertiaryDark = Color(0xFFFFBF5C)
+val OnTertiaryDark = Color(0xFFFFFFFF)
+val TertiaryContainerDark = Color(0xFFFDDEAE)
+val OnTertiaryContainerDark = Color(0xFF271900)
+val ErrorDark = Color(0xFFFF3C38)
+val OnErrorDark = Color(0xFFFFFFFF)
+val ErrorContainerDark = Color(0xFFFFDAD6)
+val OnErrorContainerDark = Color(0xFFFF9593)
+val BackgroundDark = Color(0xFF171614) // This value is not directly in the colorScheme, derived from surface
+val OnBackgroundDark = Color(0xFFFF8C42) // This value is not directly in the colorScheme, derived from onSurface
+val SurfaceDark = Color(0xFF171614)
+val OnSurfaceDark = Color(0xFFFF8C42)
+val SurfaceVariantDark = Color(0xFFFFAC24) // Placeholder as it's not explicitly in JSON. Using a similar tone
+val OnSurfaceVariantDark = Color(0xFFFFFAC4)
+val OutlineDark = Color(0xFFFFBF5C)
+val OutlineVariantDark = Color(0xFF52443C)
+val ScrimDark = Color(0xFF000000)
+val InverseSurfaceDark = Color(0xFFFFaa5a) // Corrected from json value 'ffaa5a'
+val InverseOnSurfaceDark = Color(0xFFFFF275) // Corrected from json value 'fffff275'
+val InversePrimaryDark = Color(0xFFFF785A)
+val SurfaceDimDark = Color(0xFF1A120D)
+val SurfaceBrightDark = Color(0xFF413732)
+val SurfaceContainerLowestDark = Color(0xFF140D08)
+val SurfaceContainerLowDark = Color(0xFF221A15)
+val SurfaceContainerDark = Color(0xFF271E19)
+val SurfaceContainerHighDark = Color(0xFF312823)
+val SurfaceContainerHighestDark = Color(0xFFFFF275) // Corrected from json value 'fffff275'
