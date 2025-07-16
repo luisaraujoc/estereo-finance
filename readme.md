@@ -2,6 +2,8 @@ Organização de Pastas para App Android: MVVM com Banco de Dados Local e Extern
 
 Esta é uma sugestão de estrutura de pastas, partindo do pacote raiz do seu aplicativo (com.yourcompany.yourapp).
 
+
+```
 com.coutinho.estereof/
 ├── data/
 │   ├── local/
@@ -45,6 +47,7 @@ com.coutinho.estereof/
 │   ├── BaseViewModel.kt
 │   └── BaseRepository.kt
 └── EstereoFApp.kt           (Classe Application, se necessário para DI ou inicializações globais)
+```
 
 Detalhamento das Camadas e Pastas:
 1. data/ (Camada de Dados)
