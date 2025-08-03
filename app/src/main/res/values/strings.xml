@@ -42,4 +42,27 @@
     <string name="category_description_label">Description</string>
     <string name="view_subcategories_button">View Subcategories</string>
     <string name="from_category_label">From %s</string>
+
+    <string name="filter_by_period_label">Filtrar por Período</string>
+    <string name="period_today">Hoje</string>
+    <string name="period_this_week">Esta Semana</string>
+    <string name="period_last_week">Semana Passada</string>
+    <string name="period_this_month">Este Mês</string>
+    <string name="period_last_month">Mês Passado</string>
+    <string name="period_this_year">Este Ano</string>
+    <string name="period_last_year">Ano Passado</string>
+    <string name="period_all_time">Todo o Tempo</string>
+    <string name="no_transactions_found">Nenhuma transação recente.</string>
+    <string name="error_loading_transactions">Erro ao carregar transações: %s</string>
+    <string name="period_yesterday">Ontem</string>
+    <string name="period_week_number">Semana %d</string>
+
+    <!-- Novas strings para Categories Screen (algumas já existiam, mas garantindo) -->
+    <string name="no_categories_found">Nenhuma categoria encontrada.</string>
+    <string name="error_loading_categories">Erro ao carregar categorias: %s</string>
+    <string name="edit_button">Editar</string>
+    <string name="delete_button">Apagar</string>
+    <string name="success_delete_category">Categoria \'%s\' apagada com sucesso!</string>
+    <string name="error_deleting_category">Erro ao apagar categoria \'%s\': %s</string>
+
 </resources>

@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("com.google.devtools.ksp")
     id("org.jetbrains.kotlin.plugin.serialization") version "2.2.0"
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -30,11 +31,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "1.8"
     }
     buildFeatures {
         compose = true
@@ -46,11 +47,16 @@ dependencies {
     val ktor_version = "3.2.0"
     val supabase_version = "3.2.0"
     val dotenv_version = "6.5.1"
+    val hilt_version = "1.2.0"
 
     // Room dependencies
     implementation("androidx.room:room-runtime:${room_version}")
     ksp("androidx.room:room-compiler:$room_version")
 
+    // Hilt dependencies
+    implementation("com.google.dagger:hilt-android:2.56.2")
+    ksp("com.google.dagger:hilt-android-compiler:2.56.2")
+    implementation("androidx.hilt:hilt-navigation-compose:$hilt_version")
 
     // Coroutines and Flow
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
@@ -66,6 +72,9 @@ dependencies {
 
     // dotenv
     implementation("io.github.cdimascio:dotenv-kotlin:$dotenv_version")
+
+    // Bcrypt
+    implementation("org.mindrot:jbcrypt:0.4")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
