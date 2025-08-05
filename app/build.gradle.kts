@@ -42,6 +42,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.ui)
     val room_version = "2.7.2"
     val nav_version = "2.9.3"
 
@@ -67,6 +68,10 @@ dependencies {
 
     // Bcrypt
     implementation("org.mindrot:jbcrypt:0.4")
+
+    // Icons
+    implementation("br.com.devsrsouza.compose.icons:eva-icons:1.1.1")
+    implementation("br.com.devsrsouza.compose.icons:font-awesome:1.1.1")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

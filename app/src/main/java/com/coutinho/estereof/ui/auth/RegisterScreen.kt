@@ -39,7 +39,6 @@ import com.coutinho.estereof.ui.theme.spaceGroteskFamily
 @Composable
 fun RegisterScreen(
     modifier: Modifier = Modifier.fillMaxSize(),
-    signupAction: () -> Unit = {},
     loginAction: () -> Unit = {}
 ) {
     // Estados para os campos de texto
@@ -328,7 +327,7 @@ fun RegisterScreen(
 
         // Botão de registro
         Button(
-            onClick = signupAction,
+            onClick = {actionSignUp()},
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
@@ -376,3 +375,6 @@ fun RegisterScreen(
     }
 }
 
+fun actionSignUp() {
+    println("Usuário registrado com sucesso!")
+}

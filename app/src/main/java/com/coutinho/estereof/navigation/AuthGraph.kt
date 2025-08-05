@@ -13,8 +13,8 @@ sealed class AuthScreen(val route: String) {
     object Register : AuthScreen("register")
 }
 
-object AppDestinations {
-    const val AUTH_ROUTE = "auth_graph" // Renomeei para maior clareza
+object AuthDestinations {
+    const val AUTH_ROUTE = "auth_graph"
 }
 
 fun NavGraphBuilder.authGraph(
@@ -22,13 +22,10 @@ fun NavGraphBuilder.authGraph(
 ) {
     navigation(
         startDestination = AuthScreen.Login.route,
-        route = AppDestinations.AUTH_ROUTE
+        route = AuthDestinations.AUTH_ROUTE
     ) {
         composable(route = AuthScreen.Login.route) {
             LoginScreen(
-                authlogonAction = {
-                    // TODO()
-                },
                 signupAction = {
                     navController.navigate(AuthScreen.Register.route)
                 },
@@ -36,9 +33,6 @@ fun NavGraphBuilder.authGraph(
         }
         composable(route = AuthScreen.Register.route) {
             RegisterScreen(
-                signupAction = {
-                    // TODO()
-                },
                 loginAction = {
                     navController.popBackStack()
                 },

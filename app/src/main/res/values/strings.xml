@@ -49,6 +49,7 @@
     <string name="transactions_title">Transactions</string>
     <string name="categories_title">Categories</string>
     <string name="reports_title">Reports</string>
+    <string name="no_transactions_label">No transactions found</string>
 
     <string name="category_details_title">Category Details</string>
     <string name="subcategories_title">Subcategories</string>
@@ -58,6 +59,7 @@
     <string name="category_description_label">Description</string>
     <string name="view_subcategories_button">View Subcategories</string>
     <string name="from_category_label">From %s</string>
+    <string name="payment_methods_title">Payment Methods</string>
 
     <string name="filter_by_period_label">filter by period</string>
     <string name="period_today">today</string>
@@ -80,5 +82,6 @@
     <string name="delete_button">delete</string>
     <string name="success_delete_category">categoiry \'%s\' deleted successfully!</string>
     <string name="error_deleting_category">error deleting category \'%s\': %s</string>
+    <string name="bottom_nav_payment_methods">Payment</string>
 
 </resources>

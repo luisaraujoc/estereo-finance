@@ -39,7 +39,6 @@ import com.coutinho.estereof.ui.theme.spaceGroteskFamily
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier.fillMaxSize(),
-    authlogonAction: () -> Unit = {},
     signupAction: () -> Unit = {}
 ) {
     // Estados para os campos de texto
@@ -195,7 +194,7 @@ fun LoginScreen(
 
         // Botão de login
         Button(
-            onClick = authlogonAction,
+            onClick = { authlogonAction() },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
@@ -244,3 +243,7 @@ fun LoginScreen(
     }
 }
 
+fun authlogonAction() {
+    // Implementar a lógica de autenticação aqui
+    // Por exemplo, verificar email e senha, fazer login, etc.
+}

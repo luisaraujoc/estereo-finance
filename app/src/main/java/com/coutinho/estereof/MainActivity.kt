@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.coutinho.estereof.navigation.AppNavigation
+import com.coutinho.estereof.navigation.AppScaffold
+import com.coutinho.estereof.ui.home.HomeScreen
 import com.coutinho.estereof.ui.theme.EstereoAppTheme
 
 
@@ -19,14 +21,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             EstereoAppTheme {
-                Scaffold(
-                    modifier = Modifier.fillMaxSize()
-                ) { innerPadding ->
-                    AppNavigation(
-                        modifier = Modifier
-                            .padding(innerPadding) // Apply inner padding to the navigation
-                    )
-                }
+                AppScaffold()
             }
         }
     }
