@@ -19,6 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,7 +43,7 @@ data class Transaction(
 
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier.fillMaxSize()
+    modifier: Modifier = Modifier.fillMaxSize(),
 ) {
 
     val GeneralBalance = BigDecimal.ZERO // Balanço geral inicial
@@ -64,7 +65,7 @@ fun HomeScreen(
                     .height(56.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
-            ){
+            ) {
                 Text(
                     text = stringResource(R.string.home_title),
                     style = MaterialTheme.typography.headlineMedium.copy(
@@ -121,7 +122,7 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Seção de Histórico
+
             Text(
                 text = stringResource(R.string.history_label),
                 style = MaterialTheme.typography.titleLarge,

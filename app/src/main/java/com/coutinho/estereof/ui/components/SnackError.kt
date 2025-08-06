@@ -10,7 +10,7 @@ import androidx.compose.ui.res.stringResource
 import com.coutinho.estereof.R
 
 @Composable
-fun SnackAlerts(
+fun SnackError(
     message: String,
     modifier: Modifier = Modifier,
     onDismiss: () -> Unit = {}

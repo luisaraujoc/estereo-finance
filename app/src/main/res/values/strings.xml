@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Estereo Finance</string>
 
     <string name="snackbar_dismiss_button">Close</string>
@@ -50,6 +50,7 @@
     <string name="categories_title">Categories</string>
     <string name="reports_title">Reports</string>
     <string name="no_transactions_label">No transactions found</string>
+    <string name="see_all_transactions">See all</string>
 
     <string name="category_details_title">Category Details</string>
     <string name="subcategories_title">Subcategories</string>
@@ -83,5 +84,33 @@
     <string name="success_delete_category">categoiry \'%s\' deleted successfully!</string>
     <string name="error_deleting_category">error deleting category \'%s\': %s</string>
     <string name="bottom_nav_payment_methods">Payment</string>
+
+    <!--  New Transaction Screen  -->
+    <string name="new_transaction_title">New Transaction</string>
+    <string name="new_transaction_add_button">Add Transaction</string>
+    <string name="new_transaction_title_label">Title</string>
+    <string name="new_transaction_description_label">Description</string>
+    <string name="new_transaction_category_label">Category</string>
+    <string name="new_transaction_date_label">Date</string>
+    <string name="new_transaction_amount_label">Amount</string>
+    <string name="placeholder_enter_title">Enter title</string>
+    <string name="placeholder_enter_amount">Enter amount</string>
+    <string name="placeholder_select_category">Select category</string>
+    <string name="placeholder_select_date">Select date</string>
+    <string name="close_button_description">Close</string>
+    <string name="payment_methods_empty">No payment method found.</string>
+
+    <string name="add_category_title">Add new category</string>
+    <string name="category_name_placeholder">Category Name</string>
+    <string name="add_category_button_description">Add new category</string>
+
+    <string name="add_payment_method_button_description">Add new payment method</string>
+    <string name="new_payment_method_title">New Payment Method</string>
+    <string name="payment_method_name_label">Name</string>
+    <string name="payment_method_name_placeholder">Enter method name</string>
+    <string name="payment_method_type_label">Type</string>
+    <string name="payment_method_type_placeholder">Select type</string>
+    <string name="add_button">Add</string>
+    <string name="cancel_button">Cancel</string>
 
 </resources>

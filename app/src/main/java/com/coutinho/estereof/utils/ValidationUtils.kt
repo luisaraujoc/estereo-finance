@@ -1,23 +1,34 @@
+// src/main/java/com/coutinho/estereof/utils/ValidationUtils.kt
 package com.coutinho.estereof.utils
 
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Snackbar
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import com.coutinho.estereof.R
+import android.util.Patterns
 
-// validação de senha
-fun passwordIsValid(password: String, confirmPassword: String): Boolean {
-    val regex = Regex(
-        "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%^&+=!?]).{8,}\$"
-    )
-    return password == confirmPassword && regex.matches(password)
-}
+object ValidationUtils { // Mudado para object para acesso direto
 
-// Verificando se os campos estão preenchidos
-fun fieldsAreFilled(email: String, name: String, password: String, confirmPassword: String): Boolean {
-    return email.isNotBlank() && name.isNotBlank() && password.isNotBlank() && confirmPassword.isNotBlank()
+    // Validação de formato de e-mail
+    fun isValidEmail(email: String): Boolean {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    // Validação de senha
+    fun isValidPassword(password: String): Boolean {
+        // Pelo menos 8 caracteres, 1 número, 1 letra maiúscula, 1 letra minúscula, 1 caracter especial
+        val passwordRegex = Regex("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!_]).{8,}$")
+        return password.matches(passwordRegex)
+    }
+
+    // Verifica se as senhas coincidem
+    fun passwordsMatch(password: String, confirmPassword: String): Boolean {
+        return password == confirmPassword
+    }
+
+    // Verificando se os campos de registro estão preenchidos
+    fun areRegisterFieldsFilled(email: String, name: String, password: String, confirmPassword: String): Boolean {
+        return email.isNotBlank() && name.isNotBlank() && password.isNotBlank() && confirmPassword.isNotBlank()
+    }
+
+    // Verificando se os campos de login estão preenchidos
+    fun areLoginFieldsFilled(email: String, password: String): Boolean {
+        return email.isNotBlank() && password.isNotBlank()
+    }
 }

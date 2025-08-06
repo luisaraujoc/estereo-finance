@@ -5,12 +5,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -26,6 +27,9 @@ import androidx.compose.ui.unit.sp
 import com.coutinho.estereof.R
 import com.coutinho.estereof.ui.theme.EstereoAppTheme
 import com.coutinho.estereof.ui.theme.spaceGroteskFamily
+import compose.icons.EvaIcons
+import compose.icons.evaicons.Fill
+import compose.icons.evaicons.fill.Plus
 import java.math.BigDecimal
 
 // Dados de exemplo para as transações
@@ -38,25 +42,56 @@ data class Transaction(
 
 @Composable
 fun TransactionsScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    addTransactionAction: () -> Unit = {}
+
 ) {
     // Lista de transações de exemplo
     val transactions = listOf<Transaction>(
     )
 
     Scaffold(
-        modifier = modifier.padding(16.dp),
+        modifier = Modifier,
         topBar = {
-            Text(
-                text = stringResource(R.string.transactions_title),
-                style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.padding(8.dp)
-            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = 24.dp,
+                    )
+                    .height(56.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ){
+                Text(
+                    text = stringResource(R.string.transactions_title),
+                    style = MaterialTheme.typography.headlineMedium.copy(
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                    ),
+                )
+            }
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { addTransactionAction() },
+                containerColor = MaterialTheme.colorScheme.primary
+            ) {
+                Icon(
+                    imageVector = EvaIcons.Fill.Plus,
+                    contentDescription = stringResource(R.string.new_transaction_add_button),
+                    tint = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier.padding(12.dp)
+                )
+            }
         }
     ){
         paddingValues ->
         Column(
-            modifier = Modifier.padding(paddingValues),
+            modifier = Modifier.padding(paddingValues).padding(
+                horizontal = 16.dp,
+                vertical = 8.dp
+            ),
         ) {
             // Lista de transações (LazyColumn)
             LazyColumn(

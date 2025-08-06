@@ -1,5 +1,6 @@
 package com.coutinho.estereof.navigation
 
+import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -9,6 +10,7 @@ import com.coutinho.estereof.ui.auth.RegisterScreen
 import com.coutinho.estereof.ui.categories.CategoriesScreen
 import com.coutinho.estereof.ui.home.HomeScreen
 import com.coutinho.estereof.ui.paymentmethods.PaymentMethodsScreen
+import com.coutinho.estereof.ui.transactions.NewTransactionScreen
 import com.coutinho.estereof.ui.transactions.TransactionsScreen
 
 sealed class AppScreen(val route: String) {
@@ -16,6 +18,9 @@ sealed class AppScreen(val route: String) {
     object Transactions : AppScreen("Transactions")
     object PaymentsMethods : AppScreen("PaymentsMethods")
     object Categories : AppScreen("Categories")
+
+    // FAB actions
+    object AddTransaction : AppScreen("AddTransaction")
 }
 
 object AppDestinations {
@@ -37,7 +42,11 @@ fun NavGraphBuilder.appGraph(
         composable(
             route = AppScreen.Transactions.route
         ){
-            TransactionsScreen()
+            TransactionsScreen(
+                addTransactionAction = {
+                    navController.navigate(AppScreen.AddTransaction.route)
+                }
+            )
         }
         composable(
             route = AppScreen.PaymentsMethods.route
@@ -48,6 +57,17 @@ fun NavGraphBuilder.appGraph(
             route = AppScreen.Categories.route
         ){
             CategoriesScreen()
+        }
+
+        // FAB Screens
+        composable(
+            route = AppScreen.AddTransaction.route
+        ){
+            NewTransactionScreen(
+                onCloseClick = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }
