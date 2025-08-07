@@ -1,4 +1,4 @@
-// src/main/java/com/coutinho/estereof/data/model/Account.kt
+// src/main/java/com/coutinho/estereof/data/model/AccountDao.kt
 package com.coutinho.estereof.data.model
 
 import androidx.room.Entity

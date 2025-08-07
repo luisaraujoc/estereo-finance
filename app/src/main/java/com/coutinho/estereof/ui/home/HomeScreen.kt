@@ -1,67 +1,81 @@
 package com.coutinho.estereof.ui.home
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.coutinho.estereof.R
-import com.coutinho.estereof.ui.theme.EstereoAppTheme
+import com.coutinho.estereof.data.DatabaseProvider
+import com.coutinho.estereof.data.model.enums.TransactionType
+import com.coutinho.estereof.data.repository.AccountRepository
+import com.coutinho.estereof.data.repository.CategoryRepository
+import com.coutinho.estereof.data.repository.PaymentMethodRepository
+import com.coutinho.estereof.data.repository.TransactionRepository
+import com.coutinho.estereof.data.repository.UserRepository
+import com.coutinho.estereof.navigation.AuthDestinations
 import com.coutinho.estereof.ui.theme.spaceGroteskFamily
+import com.coutinho.estereof.viewmodel.HomeViewModel
+import com.coutinho.estereof.viewmodel.factory.HomeViewModelFactory
+import com.coutinho.estereof.viewmodel.TransactionUi
+import compose.icons.EvaIcons
+import compose.icons.evaicons.Outline
+import compose.icons.evaicons.outline.MoreVertical
 import java.math.BigDecimal
-
-// Dados de exemplo para o histórico
-data class Transaction(
-    val title: String,
-    val category: String,
-    val amount: BigDecimal
-)
-
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier.fillMaxSize(),
+    onLogout: () -> Unit // Nova função de callback
 ) {
+    val context = LocalContext.current
+    val database = remember { DatabaseProvider.getDatabase(context) }
+    val userRepository = remember { UserRepository(database.userDao()) }
+    val accountRepository = remember { AccountRepository(database.accountDao()) }
+    val transactionRepository = remember { TransactionRepository(database.transactionDao()) }
+    val categoryRepository = remember { CategoryRepository(database.categoryDao()) }
+    val paymentMethodRepository = remember { PaymentMethodRepository(database.paymentMethodDao()) }
 
-    val GeneralBalance = BigDecimal.ZERO // Balanço geral inicial
-    val Income = BigDecimal.ZERO // Receita inicial
-    val Expense = BigDecimal.ZERO // Despesa inicial
+    val viewModel: HomeViewModel = viewModel(
+        factory = HomeViewModelFactory(
+            userRepository,
+            accountRepository,
+            transactionRepository,
+            categoryRepository,
+            paymentMethodRepository
+        )
+    )
+    val homeState by viewModel.homeState.collectAsState()
+    val userMessage by viewModel.userMessage.collectAsState()
 
-    // lista vazia de transações
-    val transactions = listOf<Transaction>()
+    val snackbarHostState = remember { SnackbarHostState() }
+    var showMenu by remember { mutableStateOf(false) }
+
+    LaunchedEffect(key1 = userMessage) {
+        userMessage?.let {
+            snackbarHostState.showSnackbar(it)
+            viewModel.setUserMessage(null)
+        }
+    }
 
     Scaffold(
         modifier = modifier,
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(
-                        horizontal = 24.dp,
-                    )
+                    .padding(horizontal = 24.dp)
                     .height(56.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
@@ -73,92 +87,122 @@ fun HomeScreen(
                         color = MaterialTheme.colorScheme.onPrimaryContainer
                     ),
                 )
+                // Dropdown Menu para Sair
+                Box {
+                    IconButton(onClick = { showMenu = true }) {
+                        Icon(
+                            imageVector = EvaIcons.Outline.MoreVertical,
+                            contentDescription = stringResource(R.string.menu_button_description)
+                        )
+                    }
+                    DropdownMenu(
+                        expanded = showMenu,
+                        onDismissRequest = { showMenu = false }
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text(text = stringResource(R.string.logout_button)) },
+                            onClick = {
+                                showMenu = false
+                                // Aciona a função de callback
+                                onLogout()
+                            }
+                        )
+                    }
+                }
             }
         }
     ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .padding(paddingValues)
-                .padding(
-                    horizontal = 16.dp,
-                    vertical = 8.dp
-                ),
-        ) {
-            // Seção de Balanço Geral
-            Text(
-                text = stringResource(R.string.general_balance_label),
-                style = MaterialTheme.typography.bodyLarge.copy(
-                    fontWeight = FontWeight.SemiBold,
-                ),
-                color = MaterialTheme.colorScheme.onBackground
-            )
-            Text(
-                text = stringResource(R.string.currency_format, GeneralBalance),
-                style = MaterialTheme.typography.displaySmall,
-                color = MaterialTheme.colorScheme.onBackground,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-
-            // Cards de Receita e Despesa
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+        if (homeState.isLoading) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
             ) {
-                // Card de Receita
-                IncomeExpenseCard(
-                    title = stringResource(R.string.income_label),
-                    amount = Income,
-                    modifier = Modifier.weight(1f)
-                )
-                Spacer(modifier = Modifier.padding(8.dp))
-                // Card de Despesa
-                IncomeExpenseCard(
-                    title = stringResource(R.string.expense_label),
-                    amount = Expense,
-                    modifier = Modifier.weight(1f)
-                )
+                CircularProgressIndicator()
             }
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-
-            Text(
-                text = stringResource(R.string.history_label),
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onBackground,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-
-            // Lista de transações (LazyColumn)
-            LazyColumn(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+        } else if (homeState.error != null) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
             ) {
-                // se não houver transações, exibe uma mensagem
-                // se tiver transações, exibe a lista
-                if (transactions.isEmpty()) {
-                    item {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center
-                        ) {
-                            Text(
-                                text = stringResource(R.string.no_transactions_label),
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurface,
-                                fontSize = 18.sp
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
+                Text(text = homeState.error ?: "Erro desconhecido")
+            }
+        } else {
+            Column(
+                modifier = Modifier
+                    .padding(paddingValues)
+                    .padding(horizontal = 16.dp)
+                    .fillMaxSize()
+            ) {
+                Text(
+                    text = stringResource(R.string.general_balance_label),
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        fontWeight = FontWeight.SemiBold,
+                    ),
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+                Text(
+                    text = stringResource(R.string.currency_format, homeState.generalBalance),
+                    style = MaterialTheme.typography.displaySmall,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    IncomeExpenseCard(
+                        title = stringResource(R.string.income_label),
+                        amount = homeState.totalIncome,
+                        modifier = Modifier.weight(1f)
+                    )
+                    Spacer(modifier = Modifier.padding(8.dp))
+                    IncomeExpenseCard(
+                        title = stringResource(R.string.expense_label),
+                        amount = homeState.totalExpense,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Text(
+                    text = stringResource(R.string.history_label),
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    if (homeState.transactions.isEmpty()) {
+                        item {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.no_transactions_label),
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                    fontSize = 18.sp
+                                )
+                                Spacer(modifier = Modifier.height(8.dp))
+                            }
                         }
-                    }
-                } else {
-                    items(transactions) { transaction ->
-                        TransactionItem(transaction)
+                    } else {
+                        items(homeState.transactions) { transaction ->
+                            TransactionItem(transaction)
+                        }
                     }
                 }
             }
@@ -179,7 +223,7 @@ fun IncomeExpenseCard(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
+                .padding(8.dp),
             verticalArrangement = Arrangement.Center
         ) {
             Text(
@@ -199,15 +243,14 @@ fun IncomeExpenseCard(
 }
 
 @Composable
-fun TransactionItem(transaction: Transaction) {
+fun TransactionItem(transaction: TransactionUi) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(
-                color = MaterialTheme.colorScheme.surfaceContainerLow,
-                shape = MaterialTheme.shapes.medium
-            )
-            .padding(16.dp),
+            .padding(
+                horizontal = 8.dp,
+                vertical = 4.dp
+            ),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -215,16 +258,15 @@ fun TransactionItem(transaction: Transaction) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Surface(
-                shape = MaterialTheme.shapes.medium,
+                shape = RoundedCornerShape(
+                    8.dp
+                ),
                 color = MaterialTheme.colorScheme.surfaceContainerHigh,
                 modifier = Modifier
                     .padding(end = 16.dp)
-                    .padding(8.dp)
             ) {
-                // Aqui você pode adicionar um ícone ou a imagem da categoria
                 Text(
                     text = " ",
-                    modifier = Modifier.padding(12.dp)
                 )
             }
             Column {
@@ -237,25 +279,17 @@ fun TransactionItem(transaction: Transaction) {
                     color = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
-                    text = transaction.category,
+                    text = transaction.categoryName, // Usando o nome da categoria
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
         Text(
-            text = stringResource(R.string.currency_format, "-${transaction.amount}"),
+            text = stringResource(R.string.currency_format, if(transaction.type == TransactionType.EXPENSE) -transaction.amount else transaction.amount),
             style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.error,
+            color = if (transaction.type == TransactionType.EXPENSE) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
             fontFamily = spaceGroteskFamily
         )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    EstereoAppTheme(darkTheme = false) {
-        HomeScreen()
     }
 }

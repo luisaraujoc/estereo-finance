@@ -4,7 +4,7 @@ package com.coutinho.estereof.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation // Importação necessária
+import androidx.navigation.navigation
 import com.coutinho.estereof.ui.auth.LoginScreen
 import com.coutinho.estereof.ui.auth.RegisterScreen
 
@@ -29,6 +29,13 @@ fun NavGraphBuilder.authGraph(
                 signupAction = {
                     navController.navigate(AuthScreen.Register.route)
                 },
+                loginSuccessAction = {
+                    navController.navigate(AppDestinations.APP_ROUTE) {
+                        popUpTo(AuthDestinations.AUTH_ROUTE) {
+                            inclusive = true
+                        }
+                    }
+                }
             )
         }
         composable(route = AuthScreen.Register.route) {
@@ -36,6 +43,13 @@ fun NavGraphBuilder.authGraph(
                 loginAction = {
                     navController.popBackStack()
                 },
+                registerSuccessAction = {
+                    navController.navigate(AuthScreen.Login.route) {
+                        popUpTo(AuthScreen.Login.route) {
+                            inclusive = true
+                        }
+                    }
+                }
             )
         }
     }

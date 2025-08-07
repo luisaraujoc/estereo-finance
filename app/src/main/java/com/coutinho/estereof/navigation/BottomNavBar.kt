@@ -1,6 +1,7 @@
 // src/main/java/com/coutinho/estereof/navigation/BottomNavBar.kt
 package com.coutinho.estereof.navigation
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -79,7 +80,7 @@ fun BottomNavBar(
     )
 
     NavigationBar(
-        containerColor = MaterialTheme.colorScheme.surface,
+        containerColor = MaterialTheme.colorScheme.background,
         modifier = Modifier.padding(0.dp),
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -90,9 +91,13 @@ fun BottomNavBar(
             NavigationBarItem(
                 colors = NavigationBarItemColors(
                     selectedIconColor = MaterialTheme.colorScheme.primary,
-                    unselectedIconColor = MaterialTheme.colorScheme.inversePrimary,
+                    unselectedIconColor = MaterialTheme.colorScheme.primary.copy(
+                        alpha = 0.6f
+                    ),
                     selectedTextColor = MaterialTheme.colorScheme.primary,
-                    unselectedTextColor = MaterialTheme.colorScheme.inversePrimary,
+                    unselectedTextColor = MaterialTheme.colorScheme.primary.copy(
+                        alpha = 0.6f
+                    ),
                     selectedIndicatorColor = Color.Transparent,
                     disabledIconColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f),
                     disabledTextColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)

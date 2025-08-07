@@ -1,37 +1,18 @@
-// src/main/java/com/coutinho/estereof/data/repository/TransactionRepository.kt
 package com.coutinho.estereof.data.repository
 
 import com.coutinho.estereof.data.dao.TransactionDao
 import com.coutinho.estereof.data.model.Transaction
 import kotlinx.coroutines.flow.Flow
 
-class TransactionRepository(private val transactionDao: TransactionDao) {
+class TransactionRepository(private val dao: TransactionDao) {
 
-    suspend fun insertTransaction(transaction: Transaction): Long {
-        return transactionDao.insertTransaction(transaction)
-    }
+    fun getByUserId(userId: Long): Flow<List<Transaction>> = dao.getByUserId(userId)
 
-    suspend fun updateTransaction(transaction: Transaction) {
-        transactionDao.updateTransaction(transaction)
-    }
+    fun getById(id: Long): Flow<Transaction> = dao.getById(id)
 
-    fun getTransactionById(transactionId: Long, userId: Long): Flow<Transaction?> {
-        return transactionDao.getTransactionById(transactionId, userId)
-    }
+    suspend fun insert(transaction: Transaction): Long = dao.insert(transaction)
 
-    fun getAllTransactionsForUser(userId: Long): Flow<List<Transaction>> {
-        return transactionDao.getAllTransactionsForUser(userId)
-    }
+    suspend fun update(transaction: Transaction) = dao.update(transaction)
 
-    fun getIncomeTransactionsForUser(userId: Long): Flow<List<Transaction>> {
-        return transactionDao.getIncomeTransactionsForUser(userId)
-    }
-
-    fun getExpenseTransactionsForUser(userId: Long): Flow<List<Transaction>> {
-        return transactionDao.getExpenseTransactionsForUser(userId)
-    }
-
-    suspend fun deleteTransaction(transactionId: Long, userId: Long) {
-        transactionDao.deleteTransaction(transactionId, userId)
-    }
+    suspend fun delete(transaction: Transaction) = dao.delete(transaction)
 }

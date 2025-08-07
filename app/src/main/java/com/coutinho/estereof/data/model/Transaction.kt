@@ -56,5 +56,5 @@ data class Transaction(
     val type: TransactionType,
     val categoryId: Long?, // Permite valor nulo
     val createdAt: Date,
-    val updatedAt: Date
+    val updatedAt: Date,
 )

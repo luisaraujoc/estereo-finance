@@ -1,29 +1,18 @@
-// src/main/java/com/coutinho/estereof/data/repository/CategoryRepository.kt
 package com.coutinho.estereof.data.repository
 
 import com.coutinho.estereof.data.dao.CategoryDao
 import com.coutinho.estereof.data.model.Category
 import kotlinx.coroutines.flow.Flow
 
-class CategoryRepository(private val categoryDao: CategoryDao) {
+class CategoryRepository(private val dao: CategoryDao) {
 
-    suspend fun insertCategory(category: Category): Long {
-        return categoryDao.insertCategory(category)
-    }
+    fun getByUserId(userId: Long): Flow<List<Category>> = dao.getByUserId(userId)
 
-    suspend fun updateCategory(category: Category) {
-        categoryDao.updateCategory(category)
-    }
+    fun getById(id: Long?): Flow<Category> = dao.getById(id)
 
-    fun getCategoryById(categoryId: Long, userId: Long): Flow<Category?> {
-        return categoryDao.getCategoryById(categoryId, userId)
-    }
+    suspend fun insert(category: Category): Long = dao.insert(category)
 
-    fun getAllCategoriesForUser(userId: Long): Flow<List<Category>> {
-        return categoryDao.getAllCategoriesForUser(userId)
-    }
+    suspend fun update(category: Category) = dao.update(category)
 
-    suspend fun deleteCategory(categoryId: Long, userId: Long) {
-        categoryDao.deleteCategory(categoryId, userId)
-    }
+    suspend fun delete(category: Category) = dao.delete(category)
 }

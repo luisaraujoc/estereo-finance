@@ -2,6 +2,7 @@ package com.coutinho.estereof.ui.categories
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,16 +16,21 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,46 +38,67 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.coutinho.estereof.R
+import com.coutinho.estereof.data.DatabaseProvider
+import com.coutinho.estereof.data.repository.CategoryRepository
+import com.coutinho.estereof.data.repository.UserRepository
 import com.coutinho.estereof.ui.theme.EstereoAppTheme
 import com.coutinho.estereof.ui.theme.spaceGroteskFamily
+import com.coutinho.estereof.viewmodel.CategoryViewModel
+import com.coutinho.estereof.viewmodel.factory.CategoryViewModelFactory
 import compose.icons.EvaIcons
 import compose.icons.evaicons.Fill
 import compose.icons.evaicons.fill.Plus
 
-// Dados de exemplo para as categorias
-data class Category(
-    val name: String
-)
+// Removendo a classe de dados fictícia, pois usaremos o modelo do banco de dados
+// import com.coutinho.estereof.data.model.Category
+// Para a função CategoryItem
+import com.coutinho.estereof.data.model.Category as DataCategory
 
 @Composable
 fun CategoriesScreen(
     modifier: Modifier = Modifier.fillMaxSize()
 ) {
-    // Lista de categorias de exemplo
-    val categories = listOf<Category>()
+    val context = LocalContext.current
+    val database = remember { DatabaseProvider.getDatabase(context) }
+    val userRepository = remember { UserRepository(database.userDao()) }
+    val categoryRepository = remember { CategoryRepository(database.categoryDao()) }
 
-    // Estado para controlar a visibilidade do AlertDialog
+    val viewModel: CategoryViewModel = viewModel(
+        factory = CategoryViewModelFactory(categoryRepository, userRepository)
+    )
+    val categoryState by viewModel.categoryState.collectAsState()
+    val userMessage by viewModel.userMessage.collectAsState()
+
     var showDialog by remember { mutableStateOf(false) }
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(key1 = userMessage) {
+        userMessage?.let {
+            snackbarHostState.showSnackbar(it)
+            viewModel.clearUserMessage()
+        }
+    }
 
     Scaffold(
         modifier = modifier.padding(),
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(
-                        horizontal = 24.dp
-                    )
+                    .padding(horizontal = 24.dp)
                     .height(56.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
-            ){
+            ) {
                 Text(
                     text = stringResource(R.string.categories_title),
                     style = MaterialTheme.typography.headlineMedium.copy(
@@ -94,50 +121,53 @@ fun CategoriesScreen(
             }
         }
     ) { paddingValues ->
-        Column(
+        Box(
             modifier = Modifier
+                .fillMaxSize()
                 .padding(paddingValues)
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 16.dp),
+            contentAlignment = Alignment.Center
         ) {
-            // Lista de categorias (LazyColumn)
-            LazyColumn(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                if (categories.isEmpty()) {
-                    item {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center
-                        ) {
-                            Text(
-                                text = stringResource(R.string.no_categories_found),
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurface,
-                                fontSize = 18.sp
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                        }
+            when {
+                categoryState.isLoading -> {
+                    CircularProgressIndicator()
+                }
+                categoryState.error != null -> {
+                    Text(text = "Erro: ${categoryState.error}", color = MaterialTheme.colorScheme.error)
+                }
+                categoryState.categories.isEmpty() -> {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = stringResource(R.string.no_categories_found),
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            fontSize = 18.sp
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
                     }
-                } else {
-                    items(categories) { category ->
-                        CategoryItem(category)
+                }
+                else -> {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        items(categoryState.categories) { category ->
+                            CategoryItem(category)
+                        }
                     }
                 }
             }
         }
     }
 
-    // AlertDialog para adicionar nova categoria
     if (showDialog) {
         AddCategoryDialog(
             onDismiss = { showDialog = false },
             onAddCategory = { newCategoryName ->
-                // TODO: Implementar a lógica para adicionar a nova categoria
-                // Por exemplo: viewModel.addCategory(newCategoryName)
+                viewModel.addCategory(newCategoryName)
                 showDialog = false
             }
         )
@@ -191,7 +221,7 @@ fun AddCategoryDialog(
 }
 
 @Composable
-fun CategoryItem(category: Category) {
+fun CategoryItem(category: DataCategory) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -222,13 +252,5 @@ fun CategoryItem(category: Category) {
             ),
             color = MaterialTheme.colorScheme.onSurface
         )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun CategoriesScreenPreview() {
-    EstereoAppTheme(darkTheme = false) {
-        CategoriesScreen()
     }
 }

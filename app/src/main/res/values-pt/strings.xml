@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Estereo Finance</string>
+
+    <string name="menu_button_description">Menu</string>
+    <string name="logout_button">Sair</string>
+
+    <string name="bottom_nav_home">Início</string>
+    <string name="bottom_nav_transactions">Transações</string>
+    <string name="bottom_nav_categories">Categorias</string>
+    <string name="bottom_nav_reports">Relatórios</string>
+    <string name="view_all_transactions_button">Ver Todos</string>
+    <string name="login_title">Entrar</string>
+    <string name="login_email_label">Email</string>
+    <string name="login_password_label">Senha</string>
+    <string name="login_button_text">Entrar</string>
+    <string name="login_register_prompt">Não tem uma conta?</string>
+    <string name="login_register_prompt_button">Criar conta</string>
+    <string name="register_title">Criar conta</string>
+    <string name="register_email_label">Email</string>
+    <string name="register_name_label">Nome</string>
+    <string name="register_confirm_password_label">Confirmar Senha</string>
+    <string name="register_button_text">Registrar</string>
+    <string name="register_login_prompt">Já tem uma conta?</string>
+    <string name="register_login_prompt_button">entrar</string>
+    <string name="error_empty_field">Este campo não pode estar vazio.</string>
+    <string name="error_invalid_email">Por favor, insira um endereço de e-mail válido.</string>
+    <string name="error_password_mismatch">As senhas não coincidem.</string>
+    <string name="error_weak_password">A senha deve ter pelo menos 6 caracteres.</string>
+    <string name="success_registration">Registro bem-sucedido!</string>
+    <string name="success_login">Login bem-sucedido!</string>
+    <string name="home_title">Início</string>
+    <string name="general_balance_label">Saldo geral deste mês</string>
+    <string name="income_label">Receita deste mês</string>
+    <string name="expense_label">Despesa deste mês</string>
+    <string name="history_label">Histórico</string>
+    <string name="currency_format">R$ %s</string>
+    <string name="transactions_title">Transações</string>
+    <string name="categories_title">Categorias</string>
+    <string name="reports_title">Relatórios</string>
+    <string name="no_transactions_label">Nenhuma transação encontrada</string>
+    <string name="see_all_transactions">Ver todas</string>
+
+    <string name="category_details_title">Detalhes da Categoria</string>
+    <string name="subcategories_title">Subcategorias</string>
+    <string name="update_category_button">Atualizar Categoria</string>
+    <string name="delete_category_button">Excluir Categoria</string>
+    <string name="category_name_label">Nome</string>
+    <string name="category_description_label">Descrição</string>
+    <string name="view_subcategories_button">Ver Subcategorias</string>
+    <string name="from_category_label">De %s</string>
+    <string name="payment_methods_title">Métodos de Pagamento</string>
+
+    <string name="filter_by_period_label">Filtrar por período</string>
+    <string name="period_today">hoje</string>
+    <string name="period_this_week">esta semana</string>
+    <string name="period_last_week">semana passada</string>
+    <string name="period_this_month">este mês</string>
+    <string name="period_last_month">mês passado</string>
+    <string name="period_this_year">este ano</string>
+    <string name="period_last_year">ano passado</string>
+    <string name="period_all_time">todo o tempo</string>
+    <string name="period_older">Mais antigos</string>
+    <string name="no_transactions_found">Nenhuma transação encontrada.</string>
+    <string name="error_loading_transactions">Falha ao carregar transações: %s</string>
+    <string name="period_yesterday">ontem</string>
+    <string name="period_week_number">semana %d</string>
+
+    <!-- Novas strings para Categories Screen (algumas já existiam, mas garantindo) -->
+    <string name="no_categories_found">Nenhuma categoria encontrada.</string>
+    <string name="error_loading_categories">Falha ao carregar categorias: %s</string>
+    <string name="edit_button">Editar</string>
+    <string name="delete_button">Excluir</string>
+    <string name="success_delete_category">Categoria \'%s\' excluída com sucesso!</string>
+    <string name="error_deleting_category">Erro ao excluir categoria \'%s\': %s</string>
+    <string name="bottom_nav_payment_methods">Pagamento</string>
+
+    <!--  New Transaction Screen  -->
+    <string name="new_transaction_title">Nova Transação</string>
+    <string name="new_transaction_add_button">Adicionar Transação</string>
+    <string name="new_transaction_title_label">Título</string>
+    <string name="new_transaction_description_label">Descrição</string>
+    <string name="new_transaction_category_label">Categoria</string>
+    <string name="new_transaction_date_label">Data</string>
+    <string name="new_transaction_amount_label">Valor</string>
+    <string name="placeholder_enter_title">Insira o título</string>
+    <string name="placeholder_enter_amount">Insira o valor</string>
+    <string name="placeholder_select_category">Selecione uma categoria</string>
+    <string name="placeholder_select_date">Selecione a data</string>
+    <string name="close_button_description">Fechar</string>
+    <string name="payment_methods_empty">Nenhum método de pagamento encontrado.</string>
+
+    <string name="add_category_title">Adicionar nova categoria</string>
+    <string name="category_name_placeholder">Nome da Categoria</string>
+    <string name="add_category_button_description">Adicionar nova categoria</string>
+
+    <string name="add_payment_method_button_description">Adicionar novo método de pagamento</string>
+    <string name="new_payment_method_title">Novo Método de Pagamento</string>
+    <string name="payment_method_name_label">Nome</string>
+    <string name="payment_method_name_placeholder">Insira o nome do método</string>
+    <string name="payment_method_type_label">Tipo</string>
+    <string name="payment_method_type_placeholder">Selecione o tipo</string>
+    <string name="add_button">Adicionar</string>
+    <string name="cancel_button">Cancelar</string>
+
+    <string name="snackbar_empty_fields">Por favor, preencha todos os campos.</string>
+    <string name="snackbar_invalid_email_format">Por favor, insira um e-mail válido.</string>
+    <string name="snackbar_password_mismatch">As senhas não coincidem.</string>
+    <string name="snackbar_invalid_password_strength">A senha deve ter pelo menos 8 caracteres, conter pelo menos uma letra maiúscula, uma minúscula, um número e um caractere especial.</string>
+    <string name="snackbar_email_already_registered">O e-mail já está registrado.</string>
+    <string name="snackbar_registration_successful">Registro bem-sucedido!</string>
+    <string name="snackbar_registration_failed">O registro falhou: %s</string>
+    <string name="snackbar_invalid_credentials">Credenciais inválidas.</string>
+    <string name="snackbar_login_successful">Login bem-sucedido!</string>
+    <string name="snackbar_login_failed">O login falhou: %s</string>
+    <string name="snackbar_dismiss_button">Dispensar</string>
+    <string name="snackbar_transaction_added_success">Transação adicionada com sucesso!</string>
+    <string name="snackbar_transaction_added_failed">Falha ao adicionar transação: %s</string>
+    <string name="snackbar_category_name_empty">O nome da categoria não pode estar vazio.</string>
+    <string name="snackbar_category_added_success">Categoria adicionada com sucesso!</string>
+    <string name="snackbar_category_added_failed">Falha ao adicionar categoria: %s</string>
+    <string name="snackbar_payment_method_name_empty">O nome do método de pagamento não pode estar vazio.</string>
+    <string name="snackbar_payment_method_added_success">Método de pagamento adicionado com sucesso!</string>
+    <string name="snackbar_payment_method_added_failed">Falha ao adicionar método de pagamento: %s</string>
+
+    <string name="transaction_details_title">Detalhes da Transação</string>
+    <string name="transaction_details_title_label">Título</string>
+    <string name="transaction_details_description_label">Descrição</string>
+    <string name="transaction_details_category_label">Categoria</string>
+    <string name="transaction_details_date_label">Data</string>
+    <string name="transaction_details_amount_label">Valor</string>
+    <string name="back_button_description">Voltar</string>
+    <string name="select_date_icon_description">Selecionar data</string>
+    <string name="select_category_icon_description">Selecionar categoria</string>
+
+    <string name="new_transaction_payment_method_label">Método de Pagamento</string>
+    <string name="placeholder_select_payment_method">Selecione o método de pagamento</string>
+    <string name="select_payment_method_icon_description">Selecionar método de pagamento</string>
+
+</resources>

@@ -1,20 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Estereo Finance</string>
 
-    <string name="snackbar_dismiss_button">Close</string>
-    <string name="snackbar_empty_field">Please fill in all fields.</string>
-    <!--  mensagem das senhas que não coincidem  -->
-    <string name="snackbar_password_mismatch">Passwords do not match.</string>
-    <!--  Senha invalida (esponha os requisitos das senha
-        * Verifica se a senha tem 8 caracteres
-        * Se tem 1 número
-        * Se tem 1 letra maiuscula
-        * Se tem 1 letra minuscula
-        * Se tem 1 caracter especial
-        * E se coinscide com o campo `confirmPassword
-    -->
-    <string name="snackbar_invalid_password">Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character.</string>
-    <string name="snackbar_invalid_email">Please enter a valid email address.</string>
+    <string name="menu_button_description">Menu</string>
+    <string name="logout_button">Logout</string>
 
     <string name="bottom_nav_home">Home</string>
     <string name="bottom_nav_transactions">Transactions</string>
@@ -41,9 +29,9 @@
     <string name="success_registration">Registration successful!</string>
     <string name="success_login">Login successful!</string>
     <string name="home_title">Home</string>
-    <string name="general_balance_label">General Balance</string>
-    <string name="income_label">Income</string>
-    <string name="expense_label">Expense</string>
+    <string name="general_balance_label">General Balance this month</string>
+    <string name="income_label">Income this month</string>
+    <string name="expense_label">Expense this month</string>
     <string name="history_label">History</string>
     <string name="currency_format">$ %s</string>
     <string name="transactions_title">Transactions</string>
@@ -71,13 +59,14 @@
     <string name="period_this_year">this year</string>
     <string name="period_last_year">last year</string>
     <string name="period_all_time">all time</string>
+    <string name="period_older">Older</string>
     <string name="no_transactions_found">No transactions found.</string>
     <string name="error_loading_transactions">loading transactions failed: %s</string>
     <string name="period_yesterday">yesterday</string>
     <string name="period_week_number">week %d</string>
 
     <!-- Novas strings para Categories Screen (algumas já existiam, mas garantindo) -->
-    <string name="no_categories_found">no categories found.</string>
+    <string name="no_categories_found">No categories found.</string>
     <string name="error_loading_categories">loading categories failed: %s</string>
     <string name="edit_button">Edit</string>
     <string name="delete_button">delete</string>
@@ -112,5 +101,41 @@
     <string name="payment_method_type_placeholder">Select type</string>
     <string name="add_button">Add</string>
     <string name="cancel_button">Cancel</string>
+
+    <string name="snackbar_empty_fields">Please fill in all fields.</string>
+    <string name="snackbar_invalid_email_format">Please enter a valid email address.</string>
+    <string name="snackbar_password_mismatch">Passwords do not match.</string>
+    <string name="snackbar_invalid_password_strength">Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character.</string>
+    <string name="snackbar_email_already_registered">Email is already registered.</string>
+    <string name="snackbar_registration_successful">Registration successful!</string>
+    <string name="snackbar_registration_failed">Registration failed: %s</string>
+    <string name="snackbar_invalid_credentials">Invalid credentials.</string>
+    <string name="snackbar_login_successful">Login successful!</string>
+    <string name="snackbar_login_failed">Login failed: %s</string>
+    <string name="snackbar_dismiss_button">Dismiss</string>
+    <string name="snackbar_transaction_added_success">Transaction added successfully!</string>
+    <string name="snackbar_transaction_added_failed">Failed to add transaction: %s</string>
+    <string name="snackbar_category_name_empty">Category name cannot be empty.</string>
+    <string name="snackbar_category_added_success">Category added successfully!</string>
+    <string name="snackbar_category_added_failed">Failed to add category: %s</string>
+    <string name="snackbar_payment_method_name_empty">Payment method name cannot be empty.</string>
+    <string name="snackbar_payment_method_added_success">Payment method added successfully!</string>
+    <string name="snackbar_payment_method_added_failed">Failed to add payment method: %s</string>
+
+    <string name="transaction_details_title">Transaction Details</string>
+    <string name="transaction_details_title_label">Title</string>
+    <string name="transaction_details_description_label">Description</string>
+    <string name="transaction_details_category_label">Category</string>
+    <string name="transaction_details_date_label">Date</string>
+    <string name="transaction_details_amount_label">Amount</string>
+    <string name="back_button_description">Back</string>
+    <string name="select_date_icon_description">Select Date</string>
+    <string name="select_category_icon_description">Select category</string>
+
+    <string name="new_transaction_payment_method_label">Payment Method</string>
+    <string name="placeholder_select_payment_method">Select payment method</string>
+
+    <string name="select_payment_method_icon_description">Select payment method</string>
+
 
 </resources>

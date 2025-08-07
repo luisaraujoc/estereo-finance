@@ -13,13 +13,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,26 +29,56 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.coutinho.estereof.R
-import com.coutinho.estereof.ui.theme.EstereoAppTheme
+import com.coutinho.estereof.data.DatabaseProvider
+import com.coutinho.estereof.data.repository.AccountRepository
+import com.coutinho.estereof.data.repository.UserRepository
 import com.coutinho.estereof.ui.theme.spaceGroteskFamily
+import com.coutinho.estereof.viewmodel.AuthState
+import com.coutinho.estereof.viewmodel.AuthViewModel
+import com.coutinho.estereof.viewmodel.factory.AuthViewModelFactory
 
 @Composable
 fun RegisterScreen(
     modifier: Modifier = Modifier.fillMaxSize(),
-    loginAction: () -> Unit = {}
+    loginAction: () -> Unit = {},
+    registerSuccessAction: () -> Unit = {}
 ) {
-    // Estados para os campos de texto
+    val context = LocalContext.current
+    val database = remember { DatabaseProvider.getDatabase(context) }
+    val userRepository = remember { UserRepository(database.userDao()) }
+    val accountRepository = remember { AccountRepository(database.accountDao()) }
+
+    val viewModel: AuthViewModel = viewModel(
+        factory = AuthViewModelFactory(userRepository, accountRepository)
+    )
+
     var email by remember { mutableStateOf("") }
     var name by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
 
+    val registerState by viewModel.registerState.collectAsState()
+
+    LaunchedEffect(key1 = registerState) {
+        when (registerState) {
+            is AuthState.Success -> {
+                registerSuccessAction()
+                viewModel.resetRegisterState()
+            }
+            is AuthState.Error -> {
+                println("Erro: ${(registerState as AuthState.Error).message}")
+            }
+            else -> {}
+        }
+    }
 
     Column(
         modifier = modifier
@@ -255,7 +287,8 @@ fun RegisterScreen(
                     backgroundColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.4f)
                 )
             ),
-            shape = RoundedCornerShape(8.dp)
+            shape = RoundedCornerShape(8.dp),
+            visualTransformation = PasswordVisualTransformation()
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -320,14 +353,15 @@ fun RegisterScreen(
                     backgroundColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.4f)
                 )
             ),
-            shape = RoundedCornerShape(8.dp)
+            shape = RoundedCornerShape(8.dp),
+            visualTransformation = PasswordVisualTransformation()
         )
 
         Spacer(modifier = Modifier.height(32.dp))
 
         // Botão de registro
         Button(
-            onClick = {actionSignUp()},
+            onClick = { viewModel.register(name, email, password, confirmPassword) },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
@@ -335,14 +369,19 @@ fun RegisterScreen(
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary
-            )
+            ),
+            enabled = registerState !is AuthState.Loading
         ) {
-            Text(
-                text = stringResource(R.string.register_button_text),
-                fontFamily = spaceGroteskFamily,
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp
-            )
+            if (registerState is AuthState.Loading) {
+                CircularProgressIndicator(color = MaterialTheme.colorScheme.onPrimary)
+            } else {
+                Text(
+                    text = stringResource(R.string.register_button_text),
+                    fontFamily = spaceGroteskFamily,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp
+                )
+            }
         }
 
         Spacer(modifier = Modifier.height(8.dp))

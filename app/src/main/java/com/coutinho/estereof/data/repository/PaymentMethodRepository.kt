@@ -1,29 +1,18 @@
-// src/main/java/com/coutinho/estereof/data/repository/PaymentMethodRepository.kt
 package com.coutinho.estereof.data.repository
 
 import com.coutinho.estereof.data.dao.PaymentMethodDao
 import com.coutinho.estereof.data.model.PaymentMethod
 import kotlinx.coroutines.flow.Flow
 
-class PaymentMethodRepository(private val paymentMethodDao: PaymentMethodDao) {
+class PaymentMethodRepository(private val dao: PaymentMethodDao) {
 
-    suspend fun insertPaymentMethod(paymentMethod: PaymentMethod): Long {
-        return paymentMethodDao.insertPaymentMethod(paymentMethod)
-    }
+    fun getByUserId(userId: Long): Flow<List<PaymentMethod>> = dao.getByUserId(userId)
 
-    suspend fun updatePaymentMethod(paymentMethod: PaymentMethod) {
-        paymentMethodDao.updatePaymentMethod(paymentMethod)
-    }
+    fun getById(id: Long): Flow<PaymentMethod> = dao.getById(id)
 
-    fun getPaymentMethodById(paymentMethodId: Long, userId: Long): Flow<PaymentMethod?> {
-        return paymentMethodDao.getPaymentMethodById(paymentMethodId, userId)
-    }
+    suspend fun insert(method: PaymentMethod): Long = dao.insert(method)
 
-    fun getAllPaymentMethodsForUser(userId: Long): Flow<List<PaymentMethod>> {
-        return paymentMethodDao.getAllPaymentMethodsForUser(userId)
-    }
+    suspend fun update(method: PaymentMethod) = dao.update(method)
 
-    suspend fun deletePaymentMethod(paymentMethodId: Long, userId: Long) {
-        paymentMethodDao.deletePaymentMethod(paymentMethodId, userId)
-    }
+    suspend fun delete(method: PaymentMethod) = dao.delete(method)
 }
